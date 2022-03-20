@@ -17,6 +17,8 @@ pipeline {
                 sh 'sudo docker run -d -p 8083:3000 nodejs'
                 sh 'sudo docker image tag nodejs:latest kapilch/nodejs:latest'
                 sh 'sudo docker push kapilch/nodejs:latest'
+                sh 'kubectl apply -f ./node-js-kubernetes-deployment.yml'
+                sh 'kubectl autoscale deployment node-js --cpu-percent=50 --min=1 --max=10'
             }
         }
     }
